@@ -8,7 +8,7 @@ import { StyledPageWrapper, StyledContentWrapper } from "./styled";
 import { useSearhPhotos } from "hooks/use-search-photos";
 
 export const App = () => {
-    const [query, setQuery] = useState("animal");
+    const [query, setQuery] = useState("");
     const [page, setPage] = useState(1);
     const pictures = useSearhPhotos({ query, page });
 
@@ -20,10 +20,10 @@ export const App = () => {
                     <SearchInput onSearch={setQuery} />
                 </Hero>
                 <GridLayout>
-                    {pictures.map(({ blur_hash, alt_description, urls }) => (
+                    {pictures.map(({ alt_description, urls }) => (
                         <Card>
                             <img
-                                key={blur_hash}
+                                key={alt_description}
                                 alt={alt_description}
                                 src={urls.small}
                             />
