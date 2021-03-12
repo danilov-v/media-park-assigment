@@ -1,18 +1,29 @@
-import React, { useState } from "react";
-import { ContentWrapper, Logo } from "./styled";
+import React from "react";
+import { GridLayout } from "../grid-layout";
 import { Card } from "../card";
-import svg from "../../assets/img/sprite.svg";
+import { Header } from "../header";
+import { Hero } from "../hero";
+import { SearchInput } from "../search-input";
+import { StyledPageWrapper, StyledContentWrapper } from "./styled";
 
 export const App = () => {
-    const [isModalOpen, setModalOpen] = useState(false);
-
     return (
-        <ContentWrapper>
-            <div>
-                <Logo>
-                    <use xlinkHref={svg + "#logo"}></use>
-                </Logo>
-            </div>
-        </ContentWrapper>
+        <StyledPageWrapper>
+            <StyledContentWrapper>
+                <Header />
+                <Hero>
+                    <SearchInput />
+                </Hero>
+                <GridLayout>
+                    <Card></Card>
+                    <Card></Card>
+                    <Card></Card>
+                    <Card></Card>
+                    <Card></Card>
+                    <Card></Card>
+                    <Card></Card>
+                </GridLayout>
+            </StyledContentWrapper>
+        </StyledPageWrapper>
     );
 };
