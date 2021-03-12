@@ -79,3 +79,5 @@ src/locales/
 
 # npmp
 shrinkwrap.yaml
+
+.env
