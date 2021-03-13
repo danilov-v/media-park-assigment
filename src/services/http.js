@@ -4,7 +4,6 @@ import {
     SEARCH_PHOTOS,
     GET_TOKEN_URL,
     getLikeEndpoint,
-    getUnlikeEndpoint,
 } from "services/constants/urls";
 
 const buildToken = (token) => (token ? `Bearer ${token}` : "");

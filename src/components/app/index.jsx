@@ -3,6 +3,7 @@ import { GridLayout } from "components/grid-layout";
 import { Card } from "components/card";
 import { Header } from "components/header";
 import { Hero } from "components/hero";
+import { Plug } from "components/plug";
 import { SearchInput } from "components/search-input";
 import { StyledPageWrapper, StyledContentWrapper } from "./styled";
 import { useSearhPhotos } from "hooks/use-search-photos";
@@ -21,21 +22,29 @@ export const App = () => {
                 <Hero>
                     <SearchInput onSearch={setQuery} />
                 </Hero>
-                <GridLayout>
-                    {photos.map(
-                        ({ id, alt_description, urls, liked_by_user }) => (
-                            <Card
-                                key={id}
-                                id={id}
-                                isAuthorized={isAuthorized}
-                                onPhotoUpdate={refetch}
-                                likedByUser={liked_by_user}
-                            >
-                                <img alt={alt_description} src={urls.small} />
-                            </Card>
-                        ),
-                    )}
-                </GridLayout>
+
+                {photos.length ? (
+                    <GridLayout>
+                        {photos.map(
+                            ({ id, alt_description, urls, liked_by_user }) => (
+                                <Card
+                                    key={id}
+                                    id={id}
+                                    isAuthorized={isAuthorized}
+                                    onPhotoUpdate={refetch}
+                                    likedByUser={liked_by_user}
+                                >
+                                    <img
+                                        alt={alt_description}
+                                        src={urls.small}
+                                    />
+                                </Card>
+                            ),
+                        )}
+                    </GridLayout>
+                ) : (
+                    <Plug query={query} />
+                )}
             </StyledContentWrapper>
         </StyledPageWrapper>
     );
