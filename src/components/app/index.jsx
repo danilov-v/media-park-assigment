@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { GridLayout } from "components/grid-layout";
 import { Card } from "components/card";
 import { Header } from "components/header";
@@ -13,12 +13,16 @@ import {
     StyledSpinner,
 } from "./styled";
 
-export const App = () => {
+export const App = React.memo(() => {
     const [query, setQuery] = useState("");
     const { photos, loading, refetch } = useSearhPhotos({
         query,
     });
     const isAuthorized = useAuth();
+
+    const onPhotoUpdate = useCallback(() => {
+        refetch(query);
+    }, [query, refetch]);
 
     return (
         <StyledPageWrapper>
@@ -38,7 +42,7 @@ export const App = () => {
                                     key={id}
                                     id={id}
                                     isAuthorized={isAuthorized}
-                                    onPhotoUpdate={refetch}
+                                    onPhotoUpdate={onPhotoUpdate}
                                     likedByUser={liked_by_user}
                                 >
                                     <img
@@ -54,4 +58,4 @@ export const App = () => {
             </StyledContentWrapper>
         </StyledPageWrapper>
     );
-};
+});
