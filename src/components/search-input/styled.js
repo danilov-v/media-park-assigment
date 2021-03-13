@@ -43,6 +43,7 @@ export const StyledMenuItem = styled.li`
     cursor: pointer;
     color: #9c9c9c;
     padding: 5px 10px;
+    background-color: ${({ active }) => (active ? "#e9f6ee" : "none")};
 
     &:hover {
         background-color: #e9f6ee;

@@ -1,6 +1,5 @@
-import React, { useState, useMemo, useRef } from "react";
+import React, { useState, useMemo } from "react";
 import PropTypes from "prop-types";
-import { useOnClickOutside } from "hooks/use-click-utside";
 import { getFilteredSuggestions } from "utils";
 import {
     StyledSearchInput,
@@ -13,7 +12,8 @@ import {
 export const SearchInput = ({ onSearch }) => {
     const [query, setQuery] = useState("");
     const [menuOpen, setMenuOpen] = useState(false);
-    const wrapperRef = useRef(null);
+    const suggestions = useMemo(() => getFilteredSuggestions(query), [query]);
+    const [activeS, setActiveS] = useState(suggestions[0]);
 
     const handleSearchClick = () => {
         onSearch(query);
@@ -22,41 +22,65 @@ export const SearchInput = ({ onSearch }) => {
     const handleOpenMenu = () => setMenuOpen(true);
     const handleCloseMenu = () => setMenuOpen(false);
 
-    const handleSugestClick = (suggest) => (e) => {
+    const handleInputChange = (e) => setQuery(e.target.value);
+    const handleInputBlur = () => setTimeout(handleCloseMenu, 100);
+
+    const handleSugestClick = (suggest) => () => {
         setQuery(suggest);
-        onSearch(query);
-        handleCloseMenu();
+        onSearch(suggest);
     };
 
-    const handleInputChange = (e) => setQuery(e.target.value);
+    const selectSuggesction = (dirrection) => {
+        let currentIndex = suggestions.indexOf(activeS);
 
-    const handleEnterClick = (event) => {
-        if (event.key === "Enter") {
-            handleSearchClick();
+        if (dirrection === "+") {
+            currentIndex =
+                currentIndex + 1 >= suggestions.length ? 0 : currentIndex + 1;
+        } else {
+            currentIndex =
+                currentIndex - 1 < 0
+                    ? suggestions.length - 1
+                    : currentIndex - 1;
+        }
+
+        setActiveS(suggestions[currentIndex]);
+    };
+
+    const handleKeyEvent = (event) => {
+        switch (event.key) {
+            case "Enter":
+                suggestions.includes(activeS)
+                    ? handleSugestClick(activeS)()
+                    : onSearch(query);
+                break;
+            case "Tab":
+                setQuery(activeS);
+                break;
+            case "ArrowDown":
+                selectSuggesction("+");
+                break;
+            case "ArrowUp":
+                selectSuggesction("-");
+                break;
+            default:
+                break;
         }
     };
 
-    const suggestions = useMemo(() => getFilteredSuggestions(query), [query]);
-
-    // USED TO CLOSE MENU ON INPUT onBlur
-    // cant use onBlur handler couse onBlure event fired before onClick StyledMenuItem
-    useOnClickOutside(wrapperRef, () =>
-        menuOpen ? handleCloseMenu() : undefined,
-    );
-
     return (
-        <StyledSearchWrapper ref={wrapperRef}>
+        <StyledSearchWrapper onKeyDownCapture={handleKeyEvent}>
             <StyledSearchInput
                 placeholder="Search query..."
                 value={query}
                 onChange={handleInputChange}
-                onKeyPress={handleEnterClick}
                 onFocus={handleOpenMenu}
+                onBlur={handleInputBlur}
             />
             <StyledMenu open={menuOpen && suggestions.length !== 0}>
                 {suggestions.map((suggest) => (
                     <StyledMenuItem
                         key={suggest}
+                        active={suggest === activeS}
                         onClick={handleSugestClick(suggest)}
                     >
                         {suggest}
