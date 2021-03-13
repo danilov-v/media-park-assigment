@@ -17,6 +17,7 @@ export const StyledLink = styled.a`
 
 export const StyledBtn = styled.button`
     background: none;
+    cursor: pointer;
     border: none;
     font-weight: bold;
 `;

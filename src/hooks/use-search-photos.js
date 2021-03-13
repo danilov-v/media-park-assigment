@@ -4,10 +4,13 @@ import { setSuggestions } from "services/localstorage";
 
 export function useSearhPhotos({ query, page, perPage }) {
     const [photos, setPhotos] = useState([]);
+    const [loading, setIsLoading] = useState(false);
 
     const fetchPhotos = useCallback(async () => {
-        console.log(1);
+        setIsLoading(true);
         const data = await searchPhotos({ query, page, perPage });
+        setIsLoading(false);
+
         setPhotos(data?.results || []);
     }, [query, page, perPage]);
 
@@ -20,5 +23,5 @@ export function useSearhPhotos({ query, page, perPage }) {
         }
     }, [query, page, perPage, fetchPhotos]);
 
-    return { photos, refetch: fetchPhotos };
+    return { photos, refetch: fetchPhotos, loading };
 }

@@ -32,7 +32,6 @@ const makeFetch = (baseUrl) => async (path, params) => {
         if (result && result.status !== 200) {
             throw data;
         }
-        console.log(data);
         return data;
     } catch (error) {
         //EMPTY RESPONSE BODY CAUSE ERROR IN result.json();
