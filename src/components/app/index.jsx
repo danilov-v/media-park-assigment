@@ -5,14 +5,19 @@ import { Header } from "components/header";
 import { Hero } from "components/hero";
 import { Plug } from "components/plug";
 import { SearchInput } from "components/search-input";
-import { StyledPageWrapper, StyledContentWrapper } from "./styled";
 import { useSearhPhotos } from "hooks/use-search-photos";
 import { useAuth } from "hooks/use-auth";
+import {
+    StyledPageWrapper,
+    StyledContentWrapper,
+    StyledSpinner,
+} from "./styled";
 
 export const App = () => {
     const [query, setQuery] = useState("");
-    const [page, setPage] = useState(1);
-    const { photos, refetch } = useSearhPhotos({ query, page });
+    const { photos, loading, refetch } = useSearhPhotos({
+        query,
+    });
     const isAuthorized = useAuth();
 
     return (
@@ -23,7 +28,9 @@ export const App = () => {
                     <SearchInput onSearch={setQuery} />
                 </Hero>
 
-                {photos.length ? (
+                {!photos.length && !loading ? (
+                    <Plug query={query} />
+                ) : (
                     <GridLayout>
                         {photos.map(
                             ({ id, alt_description, urls, liked_by_user }) => (
@@ -42,9 +49,8 @@ export const App = () => {
                             ),
                         )}
                     </GridLayout>
-                ) : (
-                    <Plug query={query} />
                 )}
+                {loading && <StyledSpinner width={30} height={30} />}
             </StyledContentWrapper>
         </StyledPageWrapper>
     );
