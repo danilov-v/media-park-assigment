@@ -7,7 +7,7 @@ a simple image search application by using unsplash.com API
 # Important!
 
 add your REACT_APP_ACCESS_KEY, REACT_APP_SECRET_KEY and REACT_APP_REDIRECT_URI to .env file
-in order to make it workon your enviroment
+in order to make it work on your enviroment
 
 # Create React App
 
