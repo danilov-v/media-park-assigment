@@ -23,6 +23,13 @@ const rotate = keyframes`
   }
 `;
 
+export const StyledGridLayout = styled.div`
+    padding: 0 20px;
+    width: 100%;
+    column-count: 3;
+    column-gap: 20px;
+`;
+
 export const StyledSpinner = styled(Spinner3)`
     color: #ff8f8f;
     display: block;

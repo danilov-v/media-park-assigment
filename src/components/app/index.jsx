@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from "react";
-import { GridLayout } from "components/grid-layout";
 import { Card } from "components/card";
 import { Header } from "components/header";
 import { Hero } from "components/hero";
@@ -10,19 +9,27 @@ import { useAuth } from "hooks/use-auth";
 import {
     StyledPageWrapper,
     StyledContentWrapper,
+    StyledGridLayout,
     StyledSpinner,
 } from "./styled";
+import { getSuggestions } from "services/localstorage";
 
 export const App = React.memo(() => {
-    const [query, setQuery] = useState("");
-    const { photos, loading, refetch } = useSearhPhotos({
+    const [query, setQuery] = useState(getSuggestions()[0] || "");
+    const [page, setPage] = useState(1);
+
+    const { photos, loading, hasMore, refetch } = useSearhPhotos({
         query,
+        page,
     });
+
     const isAuthorized = useAuth();
 
     const onPhotoUpdate = useCallback(() => {
         refetch(query);
     }, [query, refetch]);
+
+    const fetchMore = useCallback(() => setPage(page + 1), [page]);
 
     return (
         <StyledPageWrapper>
@@ -35,7 +42,7 @@ export const App = React.memo(() => {
                 {!photos.length && !loading ? (
                     <Plug query={query} />
                 ) : (
-                    <GridLayout>
+                    <StyledGridLayout>
                         {photos.map(
                             ({ id, alt_description, urls, liked_by_user }) => (
                                 <Card
@@ -52,8 +59,9 @@ export const App = React.memo(() => {
                                 </Card>
                             ),
                         )}
-                    </GridLayout>
+                    </StyledGridLayout>
                 )}
+                {hasMore && <button onClick={fetchMore}>Get more</button>}
                 {loading && <StyledSpinner width={30} height={30} />}
             </StyledContentWrapper>
         </StyledPageWrapper>
