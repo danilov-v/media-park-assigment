@@ -11,6 +11,7 @@ import {
     StyledContentWrapper,
     StyledGridLayout,
     StyledSpinner,
+    StyledGetMoreBtn,
 } from "./styled";
 import { getSuggestions } from "services/localstorage";
 
@@ -61,8 +62,12 @@ export const App = React.memo(() => {
                         )}
                     </StyledGridLayout>
                 )}
-                {hasMore && <button onClick={fetchMore}>Get more</button>}
                 {loading && <StyledSpinner width={30} height={30} />}
+                {!loading && hasMore && (
+                    <StyledGetMoreBtn onClick={fetchMore}>
+                        Get more
+                    </StyledGetMoreBtn>
+                )}
             </StyledContentWrapper>
         </StyledPageWrapper>
     );

@@ -10,6 +10,7 @@ export const StyledContentWrapper = styled.div`
     width: 100%;
     background-color: #fff;
     max-width: 1170px;
+    min-height: 100vh;
     margin: 0 auto;
 `;
 
@@ -33,8 +34,21 @@ export const StyledGridLayout = styled.div`
 export const StyledSpinner = styled(Spinner3)`
     color: #ff8f8f;
     display: block;
-    margin: 50px auto;
+    margin: 20px auto;
     width: 50px;
     height: 50px;
     animation: ${rotate} 1s linear infinite;
+`;
+
+export const StyledGetMoreBtn = styled.button`
+    width: 200px;
+    display: flex;
+    border: none;
+    font-weight: 500;
+    text-decoration: underline;
+    outline: none;
+    margin: auto;
+    padding: 20px;
+    background: none;
+    cursor: pointer;
 `;
