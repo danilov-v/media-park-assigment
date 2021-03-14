@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
 export const StyledCard = styled.div`
     position: relative;
@@ -35,6 +35,6 @@ export const StyledLikeBtn = styled.button`
     color: ${(props) => (props.active ? "#ed4956" : " #fff")};
 
     &:hover {
-        color: #ed4956 !important;
+        color: #ed4956;
     }
 `;

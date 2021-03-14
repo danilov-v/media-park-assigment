@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes } from "styled-components/macro";
 import main from "../../assets/img/main-background.jpg";
 import { Spinner3 } from "@styled-icons/evil/Spinner3";
 
@@ -12,6 +12,7 @@ export const StyledContentWrapper = styled.div`
     max-width: 1170px;
     min-height: 100vh;
     margin: 0 auto;
+    padding-bottom: 20px;
 `;
 
 const rotate = keyframes`
@@ -47,7 +48,7 @@ export const StyledGetMoreBtn = styled.button`
     font-weight: 500;
     text-decoration: underline;
     outline: none;
-    margin: auto;
+    margin: 20px auto;
     padding: 20px;
     background: none;
     cursor: pointer;

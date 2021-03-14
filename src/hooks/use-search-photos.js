@@ -19,7 +19,7 @@ export function useSearhPhotos({ query, page }) {
         });
 
         setIsLoading(false);
-        setTotalCount(data.total);
+        setTotalCount(data?.total || 0);
 
         isNextPage
             ? setPhotos((photos) => [...photos, ...data?.results])
