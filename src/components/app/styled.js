@@ -1,14 +1,17 @@
 import styled, { keyframes } from "styled-components/macro";
-import main from "../../assets/img/main-background.jpg";
 import { Spinner3 } from "@styled-icons/evil/Spinner3";
 
 export const StyledPageWrapper = styled.div`
-    background-image: url(${main});
+    background: linear-gradient(
+        0deg,
+        rgba(58, 77, 83, 1) 0%,
+        rgba(176, 207, 214, 1) 100%
+    );
 `;
 
 export const StyledContentWrapper = styled.div`
     width: 100%;
-    background-color: #fff;
+    background-color: #f8f9fb;
     max-width: 1170px;
     min-height: 100vh;
     margin: 0 auto;
